@@ -9,7 +9,7 @@ interface AgendamentoDAO {
     fun getAll(): List<Agendamento>
 
     @Query("SELECT * FROM agendamentos WHERE id LIKE :id")
-    fun findById(id: String): Agendamento
+    fun findById(id: Int): Agendamento
 
     @Insert
     fun insert(vararg agendamento: Agendamento)

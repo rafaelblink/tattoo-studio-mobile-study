@@ -9,15 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import info.rafaelferreira.studiodetattoo.Database.AppDatabase
 import info.rafaelferreira.studiodetattoo.model.Agendamento
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.util.*
-import kotlin.collections.ArrayList
+
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var recycleViewAgendamentos : RecyclerView
+
+    var context = this
+    var listAgendamentos = ArrayList<Agendamento>()
+    var adapter = AdapterAgendamento(context, listAgendamentos)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,33 +26,50 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "database-name"
         ).build()
 
-        recycleViewAgendamentos = findViewById(R.id.recyclerView)
+
         val fab: View = findViewById(R.id.floatActionButton)
 
-        var listAgendamentos = ArrayList<Agendamento>()
+
+
+
+
+//        val list = db.agendamentoDAO().getAll()
 //
-//        val localDateTime = LocalDateTime.now()
-//
-//        val date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant())
+
+
+//        Thread {
+//            val localDateTime = LocalDateTime.now()
+//            val date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant())
+//            db.agendamentoDAO().insert(Agendamento(null, "Rafael Ferreira", date, 1000.0, true))
+//        }.start()
+
+
 
         Thread {
+            recycleViewAgendamentos = findViewById(R.id.recyclerView)
             val list = db.agendamentoDAO().getAll()
             listAgendamentos = ArrayList(list)
 
             val adapter = AdapterAgendamento(this, listAgendamentos)
 
             recycleViewAgendamentos.adapter = adapter
-            recycleViewAgendamentos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            recycleViewAgendamentos.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         }.start()
 
+
+
+
+
         fab.setOnClickListener{
-            val intent = Intent(MainActivity@this, Cadastrar::class.java)
+            val intent = Intent(MainActivity@this, CadastrarActivity::class.java)
             startActivity(intent)
         }
 
@@ -88,5 +106,40 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "database-name"
+        ).build()
+
+        Thread {
+            val list = db.agendamentoDAO().getAll()
+            listAgendamentos = ArrayList(list)
+            adapter = AdapterAgendamento(context, listAgendamentos)
+
+
+            runOnUiThread {
+                recycleViewAgendamentos.adapter = adapter
+                adapter.notifyDataSetChanged()
+            }
+        }.start()
+
+
+
+
+//        Thread {
+//            recycleViewAgendamentos = findViewById(R.id.recyclerView)
+//            val list = db.agendamentoDAO().getAll()
+//            listAgendamentos = ArrayList(list)
+//
+//            val adapter = AdapterAgendamento(context, listAgendamentos)
+//
+//            recycleViewAgendamentos.adapter = adapter
+//
+//        }.start()
     }
 }

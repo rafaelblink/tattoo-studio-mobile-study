@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Studio de Tattoo</string>
+    <string name="app_name">Agendamentos</string>
+    <string name="cadastro">Cadastrar Agendamento</string>
 </resources>

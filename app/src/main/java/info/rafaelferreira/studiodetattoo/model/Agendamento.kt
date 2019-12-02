@@ -14,11 +14,11 @@ data class Agendamento (
     @PrimaryKey(autoGenerate = true)
     var id: Int?,
 
-    @ColumnInfo(name = "nome") var nome: String,
+    @ColumnInfo(name = "nome") var nome: String?,
 
-    @ColumnInfo(name = "data") var data: Date,
+    @ColumnInfo(name = "data") var data: Date?,
 
-    @ColumnInfo(name = "valor") var valor: Double,
+    @ColumnInfo(name = "valor") var valor: Double?,
 
-    @ColumnInfo(name = "teveAdiantamento") var teveAdiantamento: Boolean
+    @ColumnInfo(name = "teveAdiantamento") var teveAdiantamento: Boolean?
 )
