@@ -2,6 +2,7 @@ package info.rafaelferreira.studiodetattoo
 
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import info.rafaelferreira.studiodetattoo.Database.AppDatabase
@@ -42,6 +43,10 @@ class ExibirActivity : AppCompatActivity() {
             Thread {
                 val agendamentoDB = db.agendamentoDAO().findById(agendamentoID)
                 db.agendamentoDAO().delete(agendamentoDB)
+                runOnUiThread {
+                    Toast.makeText(ExibirActivity@this, "Agendamento removido com sucesso!", Toast.LENGTH_LONG).show()
+                    finish()
+                }
             }.start()
         }
 
@@ -56,6 +61,10 @@ class ExibirActivity : AppCompatActivity() {
                 agendamentoDB.teveAdiantamento = swPagamento.isChecked
 
                 db.agendamentoDAO().update(agendamentoDB)
+                runOnUiThread {
+                    Toast.makeText(ExibirActivity@this, "Agendamento atualizado com sucesso!", Toast.LENGTH_LONG).show()
+                    finish()
+                }
             }.start()
         }
     }
