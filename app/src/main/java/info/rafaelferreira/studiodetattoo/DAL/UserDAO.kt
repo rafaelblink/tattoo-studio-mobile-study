@@ -1,12 +1,13 @@
-package info.rafaelferreira.studiodetattoo
+package info.rafaelferreira.studiodetattoo.DAL
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import info.rafaelferreira.studiodetattoo.model.User
 
 @Dao
-interface UserDao {
+interface UserDAO {
     @Query("SELECT * FROM user")
     fun getAll(): List<User>
 
@@ -18,7 +19,7 @@ interface UserDao {
     fun findByName(first: String, last: String): User
 
     @Insert
-    fun insertAll(vararg users: User)
+    fun insert(user: User)
 
     @Delete
     fun delete(user: User)
