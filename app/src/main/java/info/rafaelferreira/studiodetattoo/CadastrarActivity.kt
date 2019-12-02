@@ -22,10 +22,7 @@ class CadastrarActivity : AppCompatActivity() {
         val btnCadastrar: MaterialButton = findViewById(R.id.btnAtualizar)
         val txtNome: EditText = findViewById(R.id.txtNome)
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "database-name"
-        ).build()
+        val db = returnDB()
 
         btnCadastrar.setOnClickListener{
 
@@ -36,5 +33,12 @@ class CadastrarActivity : AppCompatActivity() {
             }.start()
         }
 
+    }
+
+    fun returnDB(): AppDatabase {
+        return Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "database-name"
+        ).build()
     }
 }

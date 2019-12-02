@@ -2,6 +2,7 @@ package info.rafaelferreira.studiodetattoo
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,19 @@ class MainActivity : AppCompatActivity() {
     var listAgendamentos = ArrayList<Agendamento>()
     var adapter = AdapterAgendamento(context, listAgendamentos)
 
+    fun returnDB(): AppDatabase {
+        return Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "database-name"
+        ).build()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -28,10 +42,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "database-name"
-        ).build()
+        val db = returnDB()
 
 
         val fab: View = findViewById(R.id.floatActionButton)
@@ -111,10 +122,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "database-name"
-        ).build()
+        val db = returnDB()
 
         Thread {
             val list = db.agendamentoDAO().getAll()
