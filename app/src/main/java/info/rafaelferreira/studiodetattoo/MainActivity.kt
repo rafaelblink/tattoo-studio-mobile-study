@@ -3,6 +3,7 @@ package info.rafaelferreira.studiodetattoo
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,24 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here.
+        val id = item.getItemId()
+
+        if (id == R.id.action_two) {
+            makeBackup()
+            return true
+        }
+
+
+        return super.onOptionsItemSelected(item)
+
+    }
+
+    fun makeBackup() {
+        // utilizar retrofit para salvar dados em API
     }
 
 
@@ -74,10 +93,6 @@ class MainActivity : AppCompatActivity() {
             recycleViewAgendamentos.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         }.start()
-
-
-
-
 
         fab.setOnClickListener{
             val intent = Intent(MainActivity@this, CadastrarActivity::class.java)

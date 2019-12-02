@@ -18,5 +18,5 @@ interface AgendamentoDAO {
     fun delete(agendamento: Agendamento)
 
     @Update
-    fun updateTodo(vararg agendamento: Agendamento)
+    fun update(vararg agendamento: Agendamento)
 }
